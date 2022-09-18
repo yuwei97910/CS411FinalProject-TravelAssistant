@@ -1,0 +1,100 @@
+
+<!doctype html>
+<html lang="en">
+  {% load static %}
+  {% include "manager.html" %}
+
+  <body>
+    {% include "navbar.html" %}
+    <br>
+    <div class="container">
+    {% include "trip_search.html" %}
+    <hr>
+    <!-- Add Results Here -->
+    <!-- No results showed on the start page -->
+      <div class="jumbotron" style="text-align:left;">
+        <div>
+          {% if form_result.is_valid and form_result.cleaned_data %}
+          <div>
+            <h3>Search for {{form_result.cleaned_data.city}}'s {{form_result.cleaned_data.spot}}</h3>
+            </br>
+            <!-- {{result_list}} -->
+            <ul style="list-style-type:none;">
+              {% for s in result_list %}
+              {% if s.type == 'Restaurants' %}
+              <div>
+                <li>
+                  <a href="{% url 'trip:restaurants-detail' s.id %}">
+                    <div class="row">
+                      <div class="left-column"><img src="{% static s.image %}" width="256" height="192"
+                          style="vertical-align:top" alt="{{ s.id }}"></div>
+                      <div class="right-column">
+                        <h3>{{s.name}}</h3>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <br>
+              </div>
+
+              {% elif s.type == 'Attractions' %}
+              <div>
+                <li>
+                  <a href="{% url 'trip:attractions-detail' s.id %}">
+                    <div class="row">
+                      <div class="left-column"><img src="{% static s.image %}" width="256" height="192"
+                          style="vertical-align:top" alt="{{ s.id }}"></div>
+                      <div class="right-column">
+                        <h3>{{s.name}}</h3>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <br>
+              </div>
+
+              {% elif s.type == 'Accommodations' %}
+              <div>
+                <li>
+                  <a href="{% url 'trip:accommodations-detail' s.id %}">
+                    <div class="row">
+                      <div class="left-column"><img src="{% static s.image %}" width="256" height="192"
+                          style="vertical-align:top" alt="{{ s.id }}"></div>
+                      <div class="right-column">
+                        <h3>{{s.name}}</h3>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <br>
+              </div>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+
+            {% else %}
+            <h3> Hey! You forgot to search! </h3>
+            {% endif %}
+
+            <div class='pagination justify-content-center'>
+              {% if result_list.has_previous %}
+              <a href='{% url "trip:trip_home" %}?page={{ result_list.previous_page_number }}'>Previous
+                Page</a>
+              {% endif %}
+
+              <span class='mx-4'>
+                Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}
+              </span>
+
+              {% if result_list.has_next %}
+              <a href='{% url "trip:trip_home" %}?page={{ result_list.next_page_number }}'> Next</a>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

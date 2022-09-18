@@ -1,0 +1,31 @@
+
+<!doctype html>
+<html lang="en">
+  {% load static %}
+  {% include "manager.html" %}
+  {% include "navbar.html" %}
+  <br>
+  <div class="container">
+    {% include "trip_search.html" %}
+    <hr>
+    <div class="jumbotron" style="text-align:left;">
+      <!-- Add Results Here -->
+      <!-- No results showed on the start page -->
+      <div>
+        {% if form_result.is_valid and form_result.cleaned_data %}
+        <div>
+          <h3>Please Tell Us Where You Live in {{form_result.cleaned_data.city}}</h3>
+          </br>
+          <!-- {{result_list}} -->
+          <ul style="list-style-type:none;">
+              {% for s in result_list %}
+              <li><a href="{% url 'trip:advanced-accommodations-detail' s.id %}">{{s.name}}</a></li>
+              {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</html>

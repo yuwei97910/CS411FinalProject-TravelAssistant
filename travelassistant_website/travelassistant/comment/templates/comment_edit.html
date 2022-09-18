@@ -1,0 +1,80 @@
+
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% include "manager.html" %}
+
+<body>
+    {% include "navbar.html" %}
+    {% block content %}
+    <div class="container">
+        <div class="container">
+            {% if edit_type == "restaurants_comments" %}
+            <div class="jumbotron" style=text-align:left;>
+            <h2>{{object.r_name}}</h2>
+            <ul style="list-style-type:none;">
+                <li>Category : {{object.category}}</li>
+                <li>City : {{object.city_name}}</li>
+                <li>Average Rating : {{object.avg_rating}}</li>
+                <li>Description : {{object.description}}</li>
+                <li>Address : {{object.r_address}}</li>
+                <li>Price level : {{object.price_level}}</li>
+            </ul>
+        </div>
+
+        <h2>Edit Your Comment!</h2>
+            <h1>{{r_comment}}</h1>
+            <form method="POST" action="{% url 'comment:comment-update'  comment_id %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <input class="btn btn-primary" name="comment_button" type="submit" value="Update Restaurants Comment">
+            </form>
+
+            {% elif edit_type == "accommodations_comments" %}
+            <div class="jumbotron" style=text-align:left;>
+            <h2>{{object.ac_name}}</h2>
+            <ul style="list-style-type:none;">
+                <li>City : {{object.city_name}}</li>
+                <li>Average Rating : {{object.avg_rating}}</li>
+                <li>Type : {{object.type}}</li>
+                <li>County : {{object.county}}</li>
+                <li>Price Level : {{object.price_level}}</li>
+            </ul>
+        </div>
+
+        <h2>Edit Your Comment!</h2>
+            <h1>{{r_comment}}</h1>
+            <form method="POST" action="{% url 'comment:comment-update' comment_id %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <input class="btn btn-primary" name="comment_button" type="submit" value="Update Accommodations Comment">
+            </form>
+
+            {% elif edit_type == "attractions_comments" %}
+            <div class="jumbotron" style=text-align:left;>
+            <h2>{{object.a_name}}</h2>
+            <ul style="list-style-type:none;">
+                <li>Category : {{object.category}}</li>
+                <li>City : {{object.city_name}}</li>
+                <li>Ranking : {{object.ranking}}</li>
+                <li>Address : {{object.a_address}}</li>
+            </ul>
+        </div>
+
+        <h2>Edit Your Comment!</h2>
+            <h1>{{r_comment}}</h1>
+            <form method="POST" action="{% url 'comment:comment-update' comment_id %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <input class="btn btn-primary" name="comment_button" type="submit" value="Update Attractions Comment">
+            </form>
+            {% endif %}
+        </div>
+        <br>
+        <br>
+
+    </div>
+    {% endblock %}
+</body>
+
+</html>

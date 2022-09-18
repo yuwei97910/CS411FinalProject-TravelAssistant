@@ -1,0 +1,44 @@
+
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% include "manager.html" %}
+    <body>
+        {% include "navbar.html" %}
+        <br>
+        {% block content %}
+
+        <div class="container">
+            <h1> Search attractions that are near your accommodation</h1>
+            <div class="jumbotron" style=text-align:left;>
+                <h2>{{object.ac_name}}</h2>
+                <ul style="list-style-type:none;">
+                    <li>City : {{object.city_name}}</li>
+                    <li>Average Rating : {{object.avg_rating}}</li>
+                    <li>Type : {{object.type}}</li>
+                    <li>County : {{object.county}}</li>
+                    <li>Price level : {{object.price_level}}</li>
+                </ul>
+            </div>
+            <div>
+                <table class="table" style="width:80%">
+                    <tr>
+                        <th>Attraction</th>
+                        <th>Restaurant</th>
+                        <th>Distance between attraction and accomodation</th>
+                        <th>Distance between attraction and restaurant</th>
+                    </tr>
+                    {% for s in tourtist_list %}
+                    <tr>
+                        <td>{{s.a_name}}</td>
+                        <td>{{s.r_name}}</td>
+                        <td>{{s.ac_a_distance}}</td>
+                        <td>{{s.a_r_distance}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>
